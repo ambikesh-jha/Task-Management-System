@@ -1,0 +1,113 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tasks</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+            color: #333;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #e9e9e9;
+        }
+        select {
+            padding: 6px;
+            font-size: 14px;
+        }
+        button {
+            display: block;
+            width: 25%;
+            margin-left: 38%;
+            padding: 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        p {
+            text-align: center;
+            margin-top: 20px;
+        }
+        a {
+            color: red;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>{{ username }} Tasks</h1>
+
+    <form action="{{ url_for('trainee_blueprint.update_user_task_status') }}" method="POST">
+        <table>
+            <tr>
+                <th>Username</th>
+                <th>Assigned By</th>
+                <th>Task</th>
+                <th>Status</th>
+            </tr>
+            {% for task in tasks %}
+            <tr>
+                <td>
+                    <input type="hidden" name="username" value="{{ task.username }}">
+                    {{ task.username }}
+                </td>
+                <td>
+                    <input type="hidden" name="assigned_by" value="{{ task.assigned_by }}">
+                    {{ task.assigned_by }}
+                </td>
+                <td>
+                    <input type="hidden" name="task" value="{{ task.task }}">
+                    {{ task.task }}
+                </td>
+                <td>
+                    <select name="task_status">
+                        <option value="to do" {% if task.task_status == 'to do' %}selected{% endif %}>To-Do</option>
+                        <option value="in progress" {% if task.task_status == 'in progress' %}selected{% endif %}>In Progress</option>
+                        <option value="done" {% if task.task_status == 'done' %}selected{% endif %}>Done</option>
+                    </select>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        <button type="submit">Update All Tasks</button>
+        <p><a href="{{ url_for('login_signup_blueprint.logout') }}">Logout here</a></p>
+    </form>
+</body>
+</html>
+

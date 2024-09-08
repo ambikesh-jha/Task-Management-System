@@ -1,0 +1,114 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Tasks</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+            color: #333;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #e9e9e9;
+        }
+        input[type="text"] {
+            padding: 8px;
+            width: 90%;
+            font-size: 14px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 0;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        span {
+            display: flex;
+            justify-content: center;
+        }
+        a {
+            text-decoration: none;
+            color: black;
+        }
+        p a:hover {
+            text-decoration: underline;
+        }
+        p {
+            text-align: center;
+        }
+        .view-all-btn {
+            background-color: #f2f2f2;
+            color: black;
+            border: 1px solid #ddd;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .view-all-btn:hover {
+            background-color: #ddd;
+        }
+    </style>
+</head>
+<body>
+    <h1>Add Tasks to Users</h1>
+    <form action="/add_task" method="POST">
+        <table>
+            <tr>
+                <th>Username</th>
+                <th>Add Task</th>
+            </tr>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.username }}</td>
+                <td>
+                    <input type="hidden" name="username[]" value="{{ user.username }}">
+                    <input type="text" name="task[]">
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        <span>
+            <button type="submit">ADD</button>
+            <button class="view-all-btn" style="margin-left: 20px;">
+                <a href="{{ url_for('trainee_blueprint.view_all_tasks') }}">VIEW ALL</a>
+            </button>
+        </span>
+        <p><a href="{{ url_for('login_signup_blueprint.logout') }}">Logout here</a></p>
+    </form>
+</body>
+</html>
+
